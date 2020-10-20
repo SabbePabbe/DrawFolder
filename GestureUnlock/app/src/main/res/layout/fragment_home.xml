@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-
         <TextView
             android:id="@+id/text_home"
             android:layout_width="match_parent"
@@ -29,5 +28,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:text="@{homeViewModel.filesString}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </layout>

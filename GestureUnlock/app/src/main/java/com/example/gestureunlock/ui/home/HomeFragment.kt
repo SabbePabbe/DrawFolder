@@ -1,31 +1,35 @@
 package com.example.gestureunlock.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.example.gestureunlock.MyFragmentListener
 import com.example.gestureunlock.R
 import com.example.gestureunlock.data.FileDatabase
 import com.example.gestureunlock.databinding.FragmentHomeBinding
+import com.google.android.material.snackbar.Snackbar
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
+    var listener: MyFragmentListener? = null
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_home, container,false
+            inflater, R.layout.fragment_home, container, false
         )
 
         val application = requireNotNull(this.activity).application
@@ -55,8 +59,8 @@ class HomeFragment : Fragment() {
         // This is necessary so that the binding can observe LiveData updates.
         binding.setLifecycleOwner(this)
 
-        homeViewModel.navigateToFile.observe( viewLifecycleOwner, Observer { file ->
-            file?.let{
+        homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
+            file?.let {
                 //this.findNavController().navigate()
                 // todo navigate to editfilefragment then call donenavigating:
                 /*
@@ -71,10 +75,28 @@ class HomeFragment : Fragment() {
         })
 
 
+
 //        val textView: TextView = binding.R.id.text_home
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             binding.textHome.text = it
         })
+
+
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /* maybe doesn't work */
+        val fab = listener?.getFab()
+        fab?.setOnClickListener {
+            homeViewModel.onCreateFile()
+            Log.i("HomeFragment", "oncreatefile called")
+            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            //.setAction("Action", null).show()
+        }
+
+    }
+
+
 }

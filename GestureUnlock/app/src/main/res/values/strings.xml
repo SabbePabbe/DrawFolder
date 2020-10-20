@@ -14,4 +14,13 @@
     <string name="dialog_create_file">Create file? </string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+
+
+    <!-- Output to TextView styled with a little HTML -->
+    <string name="title"><![CDATA[<h3>FILES</h3>]]></string>
+    <string name="created_time"><![CDATA[<b>Created:</b>]]></string>
+    <string name="quality"><![CDATA[<b>Quality:</b>]]></string>
+    <string name="hours_slept"><![CDATA[<b>Hours:Minutes:Seconds</b>]]></string>
+
+
 </resources>
