@@ -1,5 +1,6 @@
 package com.example.gestureunlock.ui.home
 
+import android.gesture.*
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,9 +19,10 @@ import com.example.gestureunlock.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
 
     private lateinit var homeViewModel: HomeViewModel
+    private var gLibrary: GestureLibrary? = null
 
     var listener: MyFragmentListener? = null
 
@@ -44,37 +46,11 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.homeViewModel = homeViewModel
 
-        //registers listener to clicking the file in the view
-//        val adapter = FileAdapter(FileListener { nightId ->
-//            //Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
-//            homeViewModel.onFileClicked(nightId)
-//        })
-//        binding.sleepList.adapter = adapter
 
-        homeViewModel.allFiles.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                //adapter.addHeaderAndSubmitList(it)
-            }
-        })
 
         // Specify the current activity as the lifecycle owner of the binding.
         // This is necessary so that the binding can observe LiveData updates.
-        binding.setLifecycleOwner(this)
-
-        homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
-            file?.let {
-                //this.findNavController().navigate()
-                // todo navigate to editfilefragment then call donenavigating:
-                /*
-                this.findNavController().navigate(
-                        SleepTrackerFragmentDirections
-                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
-                // Reset state to make sure we only navigate once, even if the device
-                // has a configuration change.
-                sleepTrackerViewModel.doneNavigating()
-                 */
-            }
-        })
+        binding.lifecycleOwner = this
 
         homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
             file?.let {
@@ -85,36 +61,54 @@ class HomeFragment : Fragment() {
             }
         })
 
-
         val adapter = FileAdapter(FileListener { fileId ->
             homeViewModel.onFileClicked(fileId)
             //Toast.makeText(context, "${fileId}", Toast.LENGTH_LONG).show()
         })
 
         binding.fileList.adapter = adapter
-        homeViewModel.allFiles.observe(viewLifecycleOwner, Observer {
+        homeViewModel.setOwner("shared");
+        homeViewModel.getFiles().observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
 
 
+        gLibrary = GestureLibraries.fromRawResource(context, R.raw.gesture)
+
+        if (gLibrary?.load()==false){
+            //Don't know what to do if not working...
+        }
+
+        binding.gOverlay.addOnGesturePerformedListener(this)
 
         return binding.root
     }
 
+    /*doesn't work?*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /* maybe doesn't work */
         val fab = listener?.getFab()
         fab?.setOnClickListener {
             homeViewModel.onCreateFile()
-            Log.i("HomeFragment", "oncreatefile called")
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //.setAction("Action", null).show()
+
         }
 
     }
 
+    override fun onGesturePerformed(overlay: GestureOverlayView?, gesture: Gesture?) {
+        val predictions : ArrayList<Prediction>? = gLibrary?.recognize(gesture)
+
+        predictions?.let {
+            if (it.size > 0 && it[0].score >1.0){
+                val action : String = it[0].name
+                Toast.makeText(context, "Recognized $action action", Toast.LENGTH_SHORT).show()
+
+                homeViewModel.setOwner(action)
+            }
+        }
+    }
 
 }

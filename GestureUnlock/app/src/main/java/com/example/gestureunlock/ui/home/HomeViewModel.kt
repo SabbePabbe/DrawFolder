@@ -6,20 +6,44 @@ import com.example.gestureunlock.data.File
 import com.example.gestureunlock.data.FileDatabaseDao
 import com.example.gestureunlock.formatFiles
 import kotlinx.coroutines.launch
-import javax.sql.CommonDataSource
+
 
 class HomeViewModel(
-        dataSource:FileDatabaseDao,
-        application: Application) : ViewModel() {
+    dataSource: FileDatabaseDao,
+    application: Application
+) : ViewModel() {
 
     val database = dataSource
 
-    val sharedFiles = database.getSharedFiles(true)
-    val allFiles = database.getAllFiles()
+    private val owner = MutableLiveData<String>()
 
-    val filesString = Transformations.map(allFiles) { files ->
-        formatFiles(files, application.resources)
+    // Instance variable that stores the current list of files. This will automatically change when owner value changes.
+    private val files: LiveData<List<File>> = Transformations.switchMap<String, List<File>>(
+        owner
+    ) { owner: String? ->
+        owner?.let {
+            database.getOwnedFiles(
+                it, "shared"
+            )
+        }
     }
+
+    // Set new dictionaryId
+    fun setOwner(newOwner: String) {
+        owner.postValue(newOwner)
+    }
+
+    fun getFiles(): LiveData<List<File>> {
+        return files
+    }
+
+    //var viewableFiles = database.getOwnedFiles("shared", "shared")
+
+    //val allFiles = database.getAllFiles()
+
+    //val filesString = Transformations.map(allFiles) { files ->
+    //    formatFiles(files, application.resources)
+    //}
 
     init {
         setUpDatabase()
@@ -29,7 +53,6 @@ class HomeViewModel(
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
-
 
 
     private val _navigateToFile = MutableLiveData<Long>()
@@ -53,6 +76,10 @@ class HomeViewModel(
         database.clear()
     }
 
+//    fun accessFiles(owner: String){
+//        viewableFiles = database.getOwnedFiles(owner, "shared")
+//
+//    }
 
     /* Use this method to set up fake files in the database.
     * TODO: set names and accesses to them */
@@ -68,13 +95,20 @@ class HomeViewModel(
             insert(File())
             insert(File())
             insert(File())
+            val f : File = File()
+            f.fileName = "hidden"
+            f.owner = "yes"
+            insert(f)
             insert(File())
+
         }
     }
 
     fun onFileClicked(id: Long){
         _navigateToFile.value = id
     }
+
+
 
     fun onCreateFile(){
         viewModelScope.launch {
