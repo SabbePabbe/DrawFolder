@@ -19,7 +19,11 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.gestureunlock.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_gestureFragment"
+            app:destination="@id/gestureFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -38,4 +42,8 @@
             android:id="@+id/action_editFileFragment_to_home_fragment"
             app:destination="@id/home_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/gestureFragment"
+        android:name="com.example.gestureunlock.ui.gesture.GestureFragment"
+        android:label="GestureFragment" />
 </navigation>

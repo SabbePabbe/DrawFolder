@@ -9,7 +9,7 @@
 
     <string name="menu_home">Files</string>
     <string name="menu_gallery">Accounts</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_slideshow">Settings</string>
     
     <string name="dialog_create_file">Create file? </string>
     <string name="create">Create</string>
