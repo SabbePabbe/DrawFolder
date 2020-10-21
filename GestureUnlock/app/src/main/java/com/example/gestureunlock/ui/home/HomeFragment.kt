@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.gestureunlock.MyFragmentListener
 import com.example.gestureunlock.R
 import com.example.gestureunlock.data.FileDatabase
@@ -74,12 +76,28 @@ class HomeFragment : Fragment() {
             }
         })
 
-
-
-//        val textView: TextView = binding.R.id.text_home
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            binding.textHome.text = it
+        homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
+            file?.let {
+                this.findNavController().navigate(
+                    HomeFragmentDirections
+                        .actionHomeFragmentToEditFileFragment(file))
+                homeViewModel.doneNavigating()
+            }
         })
+
+
+        val adapter = FileAdapter(FileListener { fileId ->
+            homeViewModel.onFileClicked(fileId)
+            //Toast.makeText(context, "${fileId}", Toast.LENGTH_LONG).show()
+        })
+
+        binding.fileList.adapter = adapter
+        homeViewModel.allFiles.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
 
 
         return binding.root

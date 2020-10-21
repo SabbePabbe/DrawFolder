@@ -67,7 +67,7 @@ interface FileDatabaseDao {
      *
      * sorted by start time in descending order.
      */
-    @Query("SELECT * FROM file_table WHERE shared = :shared ORDER BY fileId DESC")
+    @Query("SELECT * FROM file_table WHERE owner = :shared ORDER BY fileId DESC")
     fun getSharedFiles(shared: Boolean): LiveData<List<File>>
 
 

@@ -62,6 +62,8 @@ class EditFileViewModel(
      * Sets the sleep quality and updates the database.
      *
      * Then navigates back to the SleepTrackerFragment.
+     *
+     * TODO must be extensively changed
      */
     fun onSetSleepQuality(quality: Int) {
         viewModelScope.launch {

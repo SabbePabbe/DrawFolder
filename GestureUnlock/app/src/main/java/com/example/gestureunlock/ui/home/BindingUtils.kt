@@ -20,27 +20,31 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.gestureunlock.R
+import com.example.gestureunlock.convertLongToDateString
 import com.example.gestureunlock.data.File
 
 
-@BindingAdapter("sleepDurationFormatted")
-fun TextView.setSleepDurationFormatted(item: File?) {
+@BindingAdapter("fileNameString")
+fun TextView.setfileNameString(item: File?) {
     item?.let {
-        text = "Hello"
+        text = item.fileName
     }
 }
 
 
-@BindingAdapter("sleepQualityString")
-fun TextView.setSleepQualityString(item: File?) {
+@BindingAdapter("createdTimeString")
+fun TextView.setCreatedTimeString(item: File?) {
     item?.let {
-        text = "File"
+        text = convertLongToDateString(item.createdTimeMilli)
     }
 }
 
-@BindingAdapter("sleepImage")
-fun ImageView.setSleepImage(item: File?) {
+@BindingAdapter("fileImage")
+fun ImageView.setFileImage(item: File?) {
     item?.let {
-        setImageResource(R.drawable.ic_sleep_5)
+        setImageResource( when( item.owner){
+            "shared" -> R.drawable.shared
+            else -> R.drawable.ic_sleep_5
+        })
     }
 }

@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gestureunlock.data.File
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
@@ -43,3 +45,5 @@ fun formatFiles(nights: List<File>, resources: Resources): Spanned {
 interface MyFragmentListener{
     fun getFab(): FloatingActionButton
 }
+
+//class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

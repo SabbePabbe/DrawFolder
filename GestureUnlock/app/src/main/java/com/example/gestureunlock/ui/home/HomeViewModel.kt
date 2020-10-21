@@ -31,21 +31,12 @@ class HomeViewModel(
     val text: LiveData<String> = _text
 
 
-    /**
-     * Variable that tells the Fragment to navigate to a specific [FileEditFragment]
-     */
-    private val _navigateToFile = MutableLiveData<File>()
 
-    /**
-     * If this is non-null, immediately navigate to [FileEditFragment] and call [doneNavigating]
-     */
-    val navigateToFile: LiveData<File>
+    private val _navigateToFile = MutableLiveData<Long>()
+    val navigateToFile: LiveData<Long>
         get() = _navigateToFile
 
 
-    /**
-     * Call this immediately after navigating to [FileEditFragment]
-     */
     fun doneNavigating() {
         _navigateToFile.value = null
     }
@@ -71,10 +62,19 @@ class HomeViewModel(
             insert(File())
             insert(File())
             insert(File())
+            insert(File())
+            insert(File())
+            insert(File())
+            insert(File())
+            insert(File())
+            insert(File())
+            insert(File())
         }
     }
 
-
+    fun onFileClicked(id: Long){
+        _navigateToFile.value = id
+    }
 
     fun onCreateFile(){
         viewModelScope.launch {

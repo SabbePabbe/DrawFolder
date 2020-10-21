@@ -9,13 +9,14 @@ data class File(
     var fileId: Long = 0L,
 
     @ColumnInfo(name = "created_time_milli")
-    val createdTimeMilli: Long = System.currentTimeMillis(),
+    var createdTimeMilli: Long = System.currentTimeMillis(),
 
     @ColumnInfo(name = "file_name")
     var fileName: String = "New file",
 
-    @ColumnInfo(name= "shared")
-    var filename: Boolean = true
+    @ColumnInfo(name= "owner")
+    var owner: String = "shared"
+
 
 )
 
