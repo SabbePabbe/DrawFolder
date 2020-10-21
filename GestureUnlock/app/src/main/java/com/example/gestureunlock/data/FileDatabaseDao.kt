@@ -67,25 +67,12 @@ interface FileDatabaseDao {
      *
      * sorted by start time in descending order.
      */
-    @Query("SELECT * FROM file_table WHERE owner = :shared ORDER BY fileId DESC")
-    fun getSharedFiles(shared: Boolean): LiveData<List<File>>
-
-
-//    @Transaction
-//    @Query("SELECT * FROM User")
-//    fun getPlaylistsWithSongs(): List<UserWithFiles>
-
-
-    /*
-     * Selects and returns the latest night.
-
-    @Query("SELECT * FROM file_table ORDER BY fileId DESC LIMIT 1")
-    suspend fun getTonight(): File?
-     */
+    @Query("SELECT * FROM file_table WHERE owner = :owner OR owner = :shared ORDER BY fileId DESC")
+    fun getOwnedFiles(owner: String, shared: String): LiveData<List<File>>
 
     /**
-     * Selects and returns the night with given nightId.
+     * Selects and returns the file with given fileIf.
      */
     @Query("SELECT * from file_table WHERE fileId = :key")
-    fun getNightWithId(key: Long): LiveData<File>
+    fun getFileWithId(key: Long): LiveData<File>
 }
