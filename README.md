@@ -17,3 +17,10 @@ Many things are incomplete. Others, we couldn't figure out technically. Therefor
 - patterns cannot really be set by users: we have pre-defined two patterns which reveal two different sets of files:
 ![alice gesture](https://github.com/SabbePabbe/DrawFolder/blob/main/alice.gif) ![bob gesture](https://github.com/SabbePabbe/DrawFolder/blob/main/bob.gif) 
 - accounts and settings pages are limited in functionality
+
+
+## How to run the project
+1. Have Android Studio installed
+2. Open the project as an Android Studio project
+3. Run
+
