@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/gestureSuccessFragment"
         android:name="com.example.gestureunlock.ui.gesture.GestureSuccessFragment"
-        android:label="GestureSuccessFragment" >
+        android:label="Success" >
         <action
             android:id="@+id/action_gestureSuccessFragment_to_home_fragment"
             app:destination="@id/home_fragment"

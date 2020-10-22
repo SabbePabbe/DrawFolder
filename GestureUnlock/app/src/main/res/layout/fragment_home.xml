@@ -49,7 +49,7 @@
             android:background="@color/white"
             tools:context=".ui.home.HomeFragment"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="40dp"
+            app:behavior_peekHeight="48dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
@@ -70,9 +70,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Draw your pattern"
+                android:text="Reveal private files"
                 android:textColor="#673AB7"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/gesture_text" />
+                app:layout_constraintTop_toBottomOf="@id/gesture_text" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:textColor="#673AB7"
+                    android:text="Draw your password pattern" />
+            </android.gesture.GestureOverlayView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
