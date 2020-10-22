@@ -24,3 +24,5 @@ Many things are incomplete. Others, we couldn't figure out technically. Therefor
 2. Open the project as an Android Studio project
 3. Run
 
+We have tested the project on a Pixel 2 emulator, running Android 9.0 (API 28)
+
