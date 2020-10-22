@@ -24,20 +24,11 @@ import com.example.gestureunlock.data.File
 import com.example.gestureunlock.data.FileDatabaseDao
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel for SleepQualityFragment.
- *
- * @param sleepNightKey The key of the current night we are working on.
- */
 class EditFileViewModel(
         private val fileKey: Long = 0L,
         dataSource: FileDatabaseDao) : ViewModel() {
 
-    /**
-     * Hold a reference to SleepDatabase via its SleepDatabaseDao.
-     */
-    val database = dataSource
-
+    private val database = dataSource
 
     private val file = database.getFileWithId(fileKey)
 

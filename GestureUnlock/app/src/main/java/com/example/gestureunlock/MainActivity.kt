@@ -5,17 +5,14 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.gestureunlock.ui.home.HomeFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), MyFragmentListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -51,17 +48,4 @@ class MainActivity : AppCompatActivity(), MyFragmentListener {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-
-    /* maybe doesn't work */
-    override fun getFab(): FloatingActionButton {
-        return findViewById(R.id.fab)
-    }
-
-    /* maybe doesn't work */
-    override fun onAttachFragment(fragment: Fragment) {
-        super.onAttachFragment(fragment)
-        if (fragment is HomeFragment) {
-            (fragment as HomeFragment).listener = this
-        }
-    }
 }

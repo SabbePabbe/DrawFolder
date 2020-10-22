@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gestureunlock.data.File
 import com.example.gestureunlock.databinding.ListItemFileBinding
 
-class FileAdapter(val clickListener: FileListener):
+class FileAdapter(private val clickListener: FileListener):
     ListAdapter<File, FileAdapter.ViewHolder>(FileDiffCallback()) {
 
 
@@ -23,18 +23,11 @@ class FileAdapter(val clickListener: FileListener):
         holder.bind(item, clickListener)
     }
 
-
-    class ViewHolder private constructor(val binding: ListItemFileBinding) : RecyclerView.ViewHolder(binding.root){
-        val fileName: TextView = binding.fileName
-        val createdTime: TextView = binding.createdTime
-        val fileImage: ImageView = binding.fileImage
+    class ViewHolder private constructor(private val binding: ListItemFileBinding) : RecyclerView.ViewHolder(binding.root){
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-
-                //val view = layoutInflater
-                //    .inflate(R.layout.list_item_file, parent, false)
 
                 val binding = ListItemFileBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
@@ -45,15 +38,9 @@ class FileAdapter(val clickListener: FileListener):
              binding.file = item
              binding.executePendingBindings()
              binding.clickListener = clickListener
-
-//            val res = itemView.context.resources
-//            fileName.text = item.fileName
-//            createdTime.text = convertLongToDateString(item.createdTimeMilli)
-//            fileImage.setImageResource(R.drawable.shared)
         }
     }
 }
-
 
 class FileDiffCallback : DiffUtil.ItemCallback<File>() {
     override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
@@ -64,7 +51,6 @@ class FileDiffCallback : DiffUtil.ItemCallback<File>() {
         return oldItem == newItem
     }
 }
-
 
 class FileListener(val clickListener: (fileId: Long) -> Unit) {
     fun onClick(file: File) = clickListener(file.fileId)

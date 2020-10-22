@@ -47,11 +47,9 @@ class HomeViewModel(
     }
     val text: LiveData<String> = _text
 
-
     private val _navigateToFile = MutableLiveData<Long>()
     val navigateToFile: LiveData<Long>
         get() = _navigateToFile
-
 
     fun doneNavigating() {
         _navigateToFile.value = null
@@ -85,7 +83,6 @@ class HomeViewModel(
                 f.content = "This is an example file, number $i"
                 insert(f)
             }
-
         }
     }
 
@@ -93,21 +90,10 @@ class HomeViewModel(
         _navigateToFile.value = id
     }
 
-
-
     fun onCreateFile(){
         viewModelScope.launch {
             val newFile = File()
             insert(newFile)
-            /* TODO: clicking the create button should navigate to new fragment, "createFile" or something
-                and that fragment should act like the sleep quality fragment, but also create the file
-                the images in that fragment have onclick listeners that run the OnSetSleepQuality fun in
-                the sleepQuality viewmodel.
-                We should have one fun that runs when users clicks Create, after having set the name and
-                openness of the file. these values should be bound to the viewmodel i guess?
-             */
-
-
         }
     }
 

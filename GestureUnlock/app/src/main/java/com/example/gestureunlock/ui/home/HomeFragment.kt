@@ -22,8 +22,6 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
     private lateinit var homeViewModel: HomeViewModel
     private var gLibrary: GestureLibrary? = null
 
-    var listener: MyFragmentListener? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,7 +43,6 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
                 ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.homeViewModel = homeViewModel
 
-
         homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
             file?.let {
                 this.findNavController().navigate(
@@ -58,7 +55,6 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
         val adapter = FileAdapter(FileListener { fileId ->
             homeViewModel.onFileClicked(fileId)
         })
-
         binding.fileList.adapter = adapter
 
         homeViewModel.setOwner("shared");
@@ -68,26 +64,13 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
             }
         })
 
-
         gLibrary = GestureLibraries.fromRawResource(context, R.raw.gesture)
-
         if (gLibrary?.load()==false){
             //if the g library doesn't load the app might as well not do anything
         }
-
         binding.gOverlay.addOnGesturePerformedListener(this)
 
         return binding.root
-    }
-
-    /*doesn't work?*/
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        /* maybe doesn't work */
-        val fab = listener?.getFab()
-        fab?.setOnClickListener {
-            homeViewModel.onCreateFile()
-        }
     }
 
     /*Called when a gesture is drawn on the bottom sheet*/

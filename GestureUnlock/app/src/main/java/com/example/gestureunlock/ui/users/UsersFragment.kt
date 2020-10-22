@@ -12,23 +12,16 @@ import com.example.gestureunlock.R
 
 class UsersFragment : Fragment() {
 
-    private lateinit var usersViewModel: UsersViewModel
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        usersViewModel =
-                ViewModelProviders.of(this).get(UsersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_users, container, false)
         val imageView: ImageView = root.findViewById(R.id.imageView2)
         imageView.setOnClickListener {
             findNavController().navigate(R.id.action_nav_gallery_to_gestureFragment)
         }
-
-
-
         return root
     }
 

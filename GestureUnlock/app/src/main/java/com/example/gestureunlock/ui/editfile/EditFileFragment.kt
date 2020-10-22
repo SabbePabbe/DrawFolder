@@ -67,8 +67,6 @@ class EditFileFragment : Fragment() {
                 ViewModelProvider(
                         this, viewModelFactory).get(EditFileViewModel::class.java)
 
-        // To use the View Model with data binding, you have to explicitly
-        // give the binding object a reference to it.
         binding.editFileViewModel = editFileViewModel
 
         editFileViewModel.getFile().observe(viewLifecycleOwner, Observer {
@@ -77,7 +75,6 @@ class EditFileFragment : Fragment() {
                 binding.fileTitle.text = it.fileName
             }
         })
-
 
         binding.editFileInput.setOnEditorActionListener{ v, actionId, event ->
             return@setOnEditorActionListener when (actionId) {
@@ -89,20 +86,6 @@ class EditFileFragment : Fragment() {
                 else -> false
             }
         }
-
-        /*// Add an Observer to the state variable for Navigating when a Quality icon is tapped.
-        editFileViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state is true.
-
-                //this.findNavController().navigate(
-                    //todo EditFileFragmentDirections.actionEditFileFragmentToHomeFragment()
-                 //   )
-                // Reset state to make sure we only navigate once, even if the device
-                // has a configuration change.
-                editFileViewModel.doneNavigating()
-            }
-        })*/
-
         return binding.root
     }
 }
