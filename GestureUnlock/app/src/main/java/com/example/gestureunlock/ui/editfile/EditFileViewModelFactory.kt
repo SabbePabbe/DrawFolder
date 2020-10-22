@@ -26,13 +26,13 @@ import com.example.gestureunlock.data.FileDatabaseDao
  * Provides the key for the night and the SleepDatabaseDao to the ViewModel.
  */
 class EditFileViewModelFactory(
-        private val sleepNightKey: Long,
+        private val fileId: Long,
         private val dataSource: FileDatabaseDao
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditFileViewModel::class.java)) {
-            return EditFileViewModel(sleepNightKey, dataSource) as T
+            return EditFileViewModel(fileId, dataSource) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

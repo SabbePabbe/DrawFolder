@@ -20,6 +20,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -58,7 +60,7 @@ class EditFileFragment : Fragment() {
 
         // Create an instance of the ViewModel Factory.
         val dataSource = FileDatabase.getInstance(application).fileDatabaseDao
-        val viewModelFactory = EditFileViewModelFactory(arguments.fileKey, dataSource) //todo ?
+        val viewModelFactory = EditFileViewModelFactory(arguments.fileKey, dataSource)
 
         // Get a reference to the ViewModel associated with this fragment.
         val editFileViewModel =
@@ -69,7 +71,26 @@ class EditFileFragment : Fragment() {
         // give the binding object a reference to it.
         binding.editFileViewModel = editFileViewModel
 
-        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
+        editFileViewModel.getFile().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.editFileInput.setText(it.content)
+                binding.fileTitle.text = it.fileName
+            }
+        })
+
+
+        binding.editFileInput.setOnEditorActionListener{ v, actionId, event ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    editFileViewModel.onEditFile(v.text.toString())
+                    Toast.makeText(context, "Saved File", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                else -> false
+            }
+        }
+
+        /*// Add an Observer to the state variable for Navigating when a Quality icon is tapped.
         editFileViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.
 
@@ -80,7 +101,7 @@ class EditFileFragment : Fragment() {
                 // has a configuration change.
                 editFileViewModel.doneNavigating()
             }
-        })
+        })*/
 
         return binding.root
     }

@@ -18,6 +18,7 @@ package com.example.gestureunlock.ui.home
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.gestureunlock.R
 import com.example.gestureunlock.convertLongToDateString
@@ -28,6 +29,20 @@ import com.example.gestureunlock.data.File
 fun TextView.setfileNameString(item: File?) {
     item?.let {
         text = item.fileName
+        setTextColor(when(item.owner){
+            "shared" -> resources.getColor(R.color.black)
+            else -> resources.getColor(R.color.colorPrimary)
+        })
+    }
+}
+
+@BindingAdapter("fileItemView")
+fun ConstraintLayout.setfileItemView(item: File?) {
+    item?.let {
+        setBackgroundColor(when(item.owner){
+            "shared" -> resources.getColor(R.color.white)
+            else -> resources.getColor(R.color.colorPrimaryLight)
+        })
     }
 }
 
@@ -44,7 +59,7 @@ fun ImageView.setFileImage(item: File?) {
     item?.let {
         setImageResource( when( item.owner){
             "shared" -> R.drawable.shared
-            else -> R.drawable.ic_sleep_5
+            else -> R.drawable.locked
         })
     }
 }

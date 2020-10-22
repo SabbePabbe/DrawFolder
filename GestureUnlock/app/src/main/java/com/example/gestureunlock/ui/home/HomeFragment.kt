@@ -2,7 +2,6 @@ package com.example.gestureunlock.ui.home
 
 import android.gesture.*
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.example.gestureunlock.MyFragmentListener
 import com.example.gestureunlock.R
 import com.example.gestureunlock.data.FileDatabase
 import com.example.gestureunlock.databinding.FragmentHomeBinding
-import com.google.android.material.snackbar.Snackbar
 
 
 class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
@@ -36,6 +34,7 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
             inflater, R.layout.fragment_home, container, false
         )
 
+        binding.lifecycleOwner = this
         val application = requireNotNull(this.activity).application
 
         // Create an instance of the ViewModel Factory.
@@ -46,11 +45,6 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
                 ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.homeViewModel = homeViewModel
 
-
-
-        // Specify the current activity as the lifecycle owner of the binding.
-        // This is necessary so that the binding can observe LiveData updates.
-        binding.lifecycleOwner = this
 
         homeViewModel.navigateToFile.observe(viewLifecycleOwner, Observer { file ->
             file?.let {
@@ -63,10 +57,10 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
 
         val adapter = FileAdapter(FileListener { fileId ->
             homeViewModel.onFileClicked(fileId)
-            //Toast.makeText(context, "${fileId}", Toast.LENGTH_LONG).show()
         })
 
         binding.fileList.adapter = adapter
+
         homeViewModel.setOwner("shared");
         homeViewModel.getFiles().observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -78,7 +72,7 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
         gLibrary = GestureLibraries.fromRawResource(context, R.raw.gesture)
 
         if (gLibrary?.load()==false){
-            //Don't know what to do if not working...
+            //if the g library doesn't load the app might as well not do anything
         }
 
         binding.gOverlay.addOnGesturePerformedListener(this)
@@ -93,22 +87,26 @@ class HomeFragment : Fragment(), GestureOverlayView.OnGesturePerformedListener {
         val fab = listener?.getFab()
         fab?.setOnClickListener {
             homeViewModel.onCreateFile()
-
         }
-
     }
 
+    /*Called when a gesture is drawn on the bottom sheet*/
     override fun onGesturePerformed(overlay: GestureOverlayView?, gesture: Gesture?) {
         val predictions : ArrayList<Prediction>? = gLibrary?.recognize(gesture)
 
         predictions?.let {
             if (it.size > 0 && it[0].score >1.0){
                 val action : String = it[0].name
-                Toast.makeText(context, "Recognized $action action", Toast.LENGTH_SHORT).show()
 
+                Toast.makeText(context, when(action){
+                    "yes" -> "Recognized Alice's pattern"
+                    "ok" -> "Recognized Bob's pattern"
+                    else -> "Did not recognize pattern"
+                }, Toast.LENGTH_SHORT).show()
                 homeViewModel.setOwner(action)
+            } else {
+                homeViewModel.setOwner("shared")
             }
         }
     }
-
 }

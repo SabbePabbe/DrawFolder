@@ -15,7 +15,10 @@ data class File(
     var fileName: String = "New file",
 
     @ColumnInfo(name= "owner")
-    var owner: String = "shared"
+    var owner: String = "shared",
+
+    @ColumnInfo(name ="content")
+    var content: String = ""
 
 
 )

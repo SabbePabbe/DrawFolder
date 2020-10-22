@@ -16,10 +16,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.gestureunlock.ui.gallery.GalleryFragment"
+        android:id="@+id/fragment_users"
+        android:name="com.example.gestureunlock.ui.users.UsersFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" >
+        tools:layout="@layout/fragment_users" >
         <action
             android:id="@+id/action_nav_gallery_to_gestureFragment"
             app:destination="@id/gestureFragment" />
@@ -27,14 +27,14 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.gestureunlock.ui.slideshow.SlideshowFragment"
+        android:name="com.example.gestureunlock.ui.settings.SettingsFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/edit_file_fragment"
         android:name="com.example.gestureunlock.ui.editfile.EditFileFragment"
-        android:label="edit_file_fragment">
+        android:label="Edit File">
         <argument
             android:name="fileKey"
             app:argType="long" />
@@ -45,5 +45,20 @@
     <fragment
         android:id="@+id/gestureFragment"
         android:name="com.example.gestureunlock.ui.gesture.GestureFragment"
-        android:label="GestureFragment" />
+        android:label="Set your pattern" >
+        <action
+            android:id="@+id/action_gestureFragment_to_gestureSuccessFragment"
+            app:destination="@id/gestureSuccessFragment"
+            app:popUpTo="@id/fragment_users" />
+    </fragment>
+    <fragment
+        android:id="@+id/gestureSuccessFragment"
+        android:name="com.example.gestureunlock.ui.gesture.GestureSuccessFragment"
+        android:label="GestureSuccessFragment" >
+        <action
+            android:id="@+id/action_gestureSuccessFragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/fragment_users"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

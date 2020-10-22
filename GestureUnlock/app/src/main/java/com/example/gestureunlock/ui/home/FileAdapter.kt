@@ -13,13 +13,6 @@ import com.example.gestureunlock.databinding.ListItemFileBinding
 class FileAdapter(val clickListener: FileListener):
     ListAdapter<File, FileAdapter.ViewHolder>(FileDiffCallback()) {
 
-    /*
-    var data =  listOf<File>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }*/
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)

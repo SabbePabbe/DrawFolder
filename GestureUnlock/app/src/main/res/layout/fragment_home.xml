@@ -18,14 +18,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="32dp"
             tools:context=".ui.home.HomeFragment">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/file_list"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,32 +36,52 @@
 
 
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@drawable/shape_gradient_top_shadow"
+            app:layout_anchor="@id/bottomSheet" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#cccccc"
+            android:background="@color/white"
             tools:context=".ui.home.HomeFragment"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="32dp"
+            app:behavior_peekHeight="40dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@id/gesture_text"
+                app:layout_constraintEnd_toStartOf="@+id/gesture_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/expand_less"
+                android:rotation="180"/>
 
             <TextView
                 android:id="@+id/gesture_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
                 android:text="Draw your gesture"
                 android:textColor="#673AB7"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/imageView3" />
 
             <android.gesture.GestureOverlayView
                 android:id="@+id/g_overlay"
@@ -70,7 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-                android:background="#FFFFFF"
+                android:background="@color/colorPrimaryLight"
                 android:eventsInterceptionEnabled="true"
                 android:gestureColor="#673AB7"
                 android:uncertainGestureColor="#FF5722"

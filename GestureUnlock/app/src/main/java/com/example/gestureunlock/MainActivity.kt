@@ -14,7 +14,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.gestureunlock.ui.home.HomeFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), MyFragmentListener {
 
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity(), MyFragmentListener {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.home_fragment, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.home_fragment, R.id.fragment_users, R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -10,14 +10,13 @@
         <variable
             name="clickListener"
             type="com.example.gestureunlock.ui.home.FileListener" />
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(file)}"
+        app:fileItemView="@{file}"
         >
 
         <ImageView
@@ -31,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:fileImage="@{file}"
-            tools:srcCompat="@drawable/ic_sleep_5" />
+            tools:srcCompat="@drawable/shared" />
 
         <TextView
             android:id="@+id/file_name"
