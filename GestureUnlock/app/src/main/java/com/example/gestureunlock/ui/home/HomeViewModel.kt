@@ -39,7 +39,7 @@ class HomeViewModel(
     }
 
     init {
-        //setUpDatabase()
+        setUpDatabase()
     }
 
     private val _text = MutableLiveData<String>().apply {
@@ -67,21 +67,28 @@ class HomeViewModel(
         database.clear()
     }
 
+    private suspend fun getAny(): File? {
+        return database.getAnyFile()
+    }
+
     /* Use this method to set up fake files in the database.  */
     private fun setUpDatabase(){
         viewModelScope.launch {
-            clear()
-            for (i in 1..15){
-                val f : File = File()
-                f.fileName = "Example file $i"
-                f.owner = when (i){
-                    12, 15 -> "yes"
-                    14, 10 -> "ok"
-                    else -> "shared"
+            val file1 : File? = getAny()
+            if(file1 == null){
+                clear()
+                for (i in 1..15){
+                    val f : File = File()
+                    f.fileName = "Example file $i"
+                    f.owner = when (i){
+                        12, 15 -> "yes"
+                        14, 10 -> "ok"
+                        else -> "shared"
+                    }
+                    f.createdTimeMilli = 1600349125373 + 200000000*i
+                    f.content = "This is an example file, number $i"
+                    insert(f)
                 }
-                f.createdTimeMilli = 1600349125373 + 200000000*i
-                f.content = "This is an example file, number $i"
-                insert(f)
             }
         }
     }

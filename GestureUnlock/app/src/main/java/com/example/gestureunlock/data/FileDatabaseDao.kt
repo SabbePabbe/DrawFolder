@@ -17,7 +17,10 @@
 package com.example.gestureunlock.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 
 /**
@@ -46,6 +49,10 @@ interface FileDatabaseDao {
     @Query("SELECT * from file_table WHERE fileId = :key")
     suspend fun get(key: Long): File
 
+
+    @Query("SELECT * FROM file_table LIMIT 1")
+    suspend fun getAnyFile(): File?
+
     /**
      * Deletes all values from the table.
      *
@@ -71,8 +78,10 @@ interface FileDatabaseDao {
     fun getOwnedFiles(owner: String, shared: String): LiveData<List<File>>
 
     /**
-     * Selects and returns the file with given fileIf.
+     * Selects and returns the file with given fileId.
      */
     @Query("SELECT * from file_table WHERE fileId = :key")
     fun getFileWithId(key: Long): LiveData<File>
+
+
 }
