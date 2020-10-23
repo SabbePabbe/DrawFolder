@@ -22,7 +22,8 @@ Many things are incomplete. Others, we couldn't figure out technically. Therefor
 ## How to run the project
 1. Have Android Studio installed
 2. Open the project as an Android Studio project
-3. Run
+3. Select device and run (if on physical device, please enable USB Debugging on your phone)
 
-We have tested the project on a Pixel 2 emulator, running Android 9.0 (API 28)
+We have tested the project on a Pixel 2 emulator, running Android 9.0 (API 28), and on a OnePlus 6.
+
 
